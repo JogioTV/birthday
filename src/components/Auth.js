@@ -1,12 +1,21 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
+import LoginForm from './LoginForm';
+import RegisterForm from './RegisterForm';
 
 export default function Auth() {
   const [isLoggin, setIsLoggin] = useState(true);
+  const changeForm = () => {
+    setIsLoggin(!isLoggin);
+  };
   return (
     <View style={styles.view}>
       <Image style={styles.logo} source={require('../assets/logo.png')} />
-      <Text>Componente auth...</Text>
+      {isLoggin ? (
+        <LoginForm changeForm={changeForm} />
+      ) : (
+        <RegisterForm changeForm={changeForm} />
+      )}
     </View>
   );
 }
