@@ -12,6 +12,7 @@ import Auth from './src/components/Auth';
 
 import firebase from './src/utils/firebase';
 import 'firebase/auth';
+import ListBirthday from './src/components/ListBirthday';
 
 export default function App() {
   const [user, setUser] = useState(undefined);
@@ -28,23 +29,14 @@ export default function App() {
     <>
       <StatusBar barStyle="light-content" />
       <SafeAreaView style={styles.backgroud}>
-        {user ? <Logout /> : <Auth />}
+        {user ? <ListBirthday /> : <Auth />}
       </SafeAreaView>
     </>
   );
 }
-
-function Logout() {
-  const logout = () => {
-    firebase.auth().signOut();
-  };
-  return (
-    <View>
-      <Text>Estas logeado</Text>
-      <Button title="Cerrar Sesión" onPress={logout} />
-    </View>
-  );
-}
+const logout = () => {
+  firebase.auth().signOut();
+};
 
 const styles = StyleSheet.create({
   backgroud: {
