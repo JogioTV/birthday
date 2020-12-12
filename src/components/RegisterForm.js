@@ -32,9 +32,6 @@ export default function RegisterForm(props) {
       firebase
         .auth()
         .createUserWithEmailAndPassword(formData.email, formData.password)
-        .then(() => {
-          console.log('Cuenta creada');
-        })
         .catch(() => {
           setFormError({
             email: true,

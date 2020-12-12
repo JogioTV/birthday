@@ -29,7 +29,15 @@ export default function LoginForm(props) {
       errors.email = true;
       console.log('ERROR 2');
     } else {
-      console.log('Formulario de login OK');
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(formData.email, formData.password)
+        .catch(() => {
+          setFormError({
+            email: true,
+            password: true,
+          });
+        });
     }
     setFormError(errors);
   };
