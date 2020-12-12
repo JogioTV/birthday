@@ -5,9 +5,11 @@ import RegisterForm from './RegisterForm';
 
 export default function Auth() {
   const [isLoggin, setIsLoggin] = useState(true);
+
   const changeForm = () => {
     setIsLoggin(!isLoggin);
   };
+
   return (
     <View style={styles.view}>
       <Image style={styles.logo} source={require('../assets/logo.png')} />

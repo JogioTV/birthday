@@ -15,6 +15,7 @@ import 'firebase/auth';
 
 export default function App() {
   const [user, setUser] = useState(undefined);
+
   useEffect(() => {
     firebase.auth().onAuthStateChanged((response) => {
       setUser(response);
