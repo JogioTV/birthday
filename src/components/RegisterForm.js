@@ -6,19 +6,35 @@ import {
   TextInput,
   View,
 } from 'react-native';
+import {validateEmail} from '../utils/validations';
 
 export default function RegisterForm(props) {
   const {changeForm} = props;
   const [formData, setFormData] = useState(defaultValue());
+  const [formError, setFormError] = useState({});
 
   const register = () => {
-    console.log('Registrando...');
-    console.log(formData);
+    let errors = {};
+    if (!formData.email || !formData.password || !formData.repeatPassword) {
+      if (!formData.email) errors.email = true;
+      if (!formData.password) errors.password = true;
+      if (!formData.repeatPassword) errors.repeatPassword = true;
+    } else if (!validateEmail(formData.email)) {
+      errors.email = true;
+    } else if (formData.password !== formData.repeatPassword) {
+      errors.password = true;
+      errors.repeatPassword = true;
+    } else if (formData.password.length < 6) {
+      errors.password = true;
+    } else {
+      console.log('Formulario completado');
+    }
+    setFormError(errors);
   };
   return (
     <>
       <TextInput
-        style={styles.input}
+        style={[styles.input, formError.email && styles.error]}
         placeholder="Correo electrónico"
         placeholderTextColor="#969696"
         onChange={(e) => {
@@ -26,7 +42,7 @@ export default function RegisterForm(props) {
         }}
       />
       <TextInput
-        style={styles.input}
+        style={[styles.input, formError.password && styles.error]}
         placeholder="Contraseña"
         placeholderTextColor="#969696"
         secureTextEntry={true}
@@ -35,7 +51,7 @@ export default function RegisterForm(props) {
         }}
       />
       <TextInput
-        style={styles.input}
+        style={[styles.input, formError.repeatPassword && styles.error]}
         placeholder="Repetir Contraseña"
         placeholderTextColor="#969696"
         secureTextEntry={true}
@@ -86,5 +102,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
     marginBottom: 25,
+  },
+  error: {
+    borderColor: '#940c0c',
   },
 });
