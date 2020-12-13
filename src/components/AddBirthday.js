@@ -1,12 +1,18 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 
 export default function AddBirthday() {
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
   const [formData, setFormData] = useState({});
-  console.log(formData);
+
   const hideDatePicker = () => {
     setIsDatePickerVisible(false);
   };
@@ -21,6 +27,15 @@ export default function AddBirthday() {
     setFormData({...formData, dateBirth});
     hideDatePicker();
   };
+
+  const onChange = (e, type) => {
+    setFormData({...formData, [type]: e.nativeEvent.text});
+  };
+
+  const onSubmit = () => {
+    console.log(formData);
+  };
+
   return (
     <>
       <View style={styles.container}>
@@ -28,11 +43,17 @@ export default function AddBirthday() {
           style={styles.input}
           placeholder="Nombre"
           placeholderTextColor="#969696"
+          onChange={(e) => {
+            onChange(e, 'name');
+          }}
         />
         <TextInput
           style={styles.input}
           placeholder="Apellidos"
           placeholderTextColor="#969696"
+          onChange={(e) => {
+            onChange(e, 'lastName');
+          }}
         />
         <View style={[styles.input, styles.datePicker]}>
           <Text
@@ -46,6 +67,9 @@ export default function AddBirthday() {
               : 'Fecha de cumpleaños'}
           </Text>
         </View>
+        <TouchableOpacity onPress={onSubmit}>
+          <Text style={styles.addButton}>Crear Cumpleaños</Text>
+        </TouchableOpacity>
       </View>
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
@@ -79,5 +103,9 @@ const styles = StyleSheet.create({
   },
   datePicker: {
     justifyContent: 'center',
+  },
+  addButton: {
+    fontSize: 20,
+    color: '#fff',
   },
 });
