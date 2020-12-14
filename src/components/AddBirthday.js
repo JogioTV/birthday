@@ -16,7 +16,6 @@ const db = firebase.firestore(firebase);
 export default function AddBirthday() {
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
   const [formData, setFormData] = useState({});
-  const [formError, setFormError] = useState({});
 
   const hideDatePicker = () => {
     setIsDatePickerVisible(false);
@@ -38,6 +37,7 @@ export default function AddBirthday() {
   };
 
   const onSubmit = () => {
+<<<<<<< HEAD
     let errors = {};
     if (!formData.name || !formData.lastName || !formData.dateBirth) {
       if (!formData.name) errors.name = true;
@@ -58,13 +58,16 @@ export default function AddBirthday() {
     }
 
     setFormError(errors);
+=======
+    console.log(formData);
+>>>>>>> parent of 6525fcf... Validando formulario de alta de cumpleaños
   };
 
   return (
     <>
       <View style={styles.container}>
         <TextInput
-          style={[styles.input, formError.name && {borderColor: '#940c0c'}]}
+          style={styles.input}
           placeholder="Nombre"
           placeholderTextColor="#969696"
           onChange={(e) => {
@@ -72,19 +75,14 @@ export default function AddBirthday() {
           }}
         />
         <TextInput
-          style={[styles.input, formError.lastName && {borderColor: '#940c0c'}]}
+          style={styles.input}
           placeholder="Apellidos"
           placeholderTextColor="#969696"
           onChange={(e) => {
             onChange(e, 'lastName');
           }}
         />
-        <View
-          style={[
-            styles.input,
-            styles.datePicker,
-            formError.dateBirth && {borderColor: '#940c0c'},
-          ]}>
+        <View style={[styles.input, styles.datePicker]}>
           <Text
             style={{
               color: formData.dateBirth ? '#fff' : '#969696',
